@@ -6,11 +6,13 @@ package config
 
 import (
 	cliflag "github.com/go-ostrich/pkg/cli/flag"
+
 	"github.com/go-ostrich/pkg/json"
 )
 
 // Config is the running configuration structure of the IAM pump service.
 type Config struct {
+	Server *ServerConfig
 }
 
 // NewOptions app opts

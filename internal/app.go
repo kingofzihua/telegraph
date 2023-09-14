@@ -21,11 +21,12 @@ func NewApp(basename string) *app.App {
 
 func run(cfg *config.Config) app.RunFunc {
 	return func(basename string) error {
-		return Run(cfg)
-	}
-}
+		// Run runs the specified APIServer. This should never exit.
+		srv, err := createAPIServer(cfg)
+		if err != nil {
+			return err
+		}
 
-// Run runs the specified APIServer. This should never exit.
-func Run(cfg *config.Config) error {
-	return nil
+		return srv.PrepareRun().Run()
+	}
 }
