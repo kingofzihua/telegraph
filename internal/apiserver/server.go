@@ -1,4 +1,4 @@
-package internal
+package apiserver
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/go-ostrich/pkg/shutdown"
 	"github.com/go-ostrich/pkg/shutdown/shutdownmanagers/posixsignal"
 
-	"github.com/kingofzihua/telegraph/internal/config"
+	"github.com/kingofzihua/telegraph/internal/apiserver/config"
 )
 
 type apiServer struct {

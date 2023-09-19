@@ -3,8 +3,10 @@
 PACKAGE=$(shell grep "^module" go.mod | awk '{print $$2}')
 
 include scripts/make-rules/common.mk
+include scripts/make-rules/tools.mk
 include scripts/make-rules/golang.mk
 include scripts/make-rules/format.mk
+include scripts/make-rules/generate.mk
 include scripts/make-rules/other.mk
 
 

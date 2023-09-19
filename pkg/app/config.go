@@ -31,7 +31,7 @@ func init() {
 // object.
 // basename => 软件名称
 // cn => 配置文件名 config
-func addConfigFlag(basename string, cn string, fs *pflag.FlagSet) {
+func addConfigFlag(basename string, fs *pflag.FlagSet) {
 	fs.AddFlag(pflag.Lookup(configFlagName))
 
 	viper.AutomaticEnv()
@@ -45,16 +45,13 @@ func addConfigFlag(basename string, cn string, fs *pflag.FlagSet) {
 			// ./config.yaml | ./configs/config.yaml | ~/.iam/config.yaml | /etc/iam/config.yaml
 			viper.AddConfigPath(".")
 			viper.AddConfigPath("./configs/")
-			viper.AddConfigPath(filepath.Join(homedir.HomeDir(), "."+basename))
-			viper.AddConfigPath(filepath.Join("/etc", basename))
+			// systemd config rules
+			if names := strings.Split(basename, "-"); len(names) > 1 {
+				viper.AddConfigPath(filepath.Join(homedir.HomeDir(), "."+names[0]))
+				viper.AddConfigPath(filepath.Join("/etc", names[0]))
+			}
 
-			//// systemd config rules
-			//if names := strings.Split(basename, "-"); len(names) > 1 {
-			//	viper.AddConfigPath(filepath.Join(homedir.HomeDir(), "."+names[0]))
-			//	viper.AddConfigPath(filepath.Join("/etc", names[0]))
-			//}
-
-			viper.SetConfigName(cn)
+			viper.SetConfigName(basename)
 		}
 
 		if err := viper.ReadInConfig(); err != nil {

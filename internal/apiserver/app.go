@@ -1,16 +1,16 @@
-package internal
+package apiserver
 
 import (
 	"github.com/go-ostrich/pkg/app"
 
-	"github.com/kingofzihua/telegraph/internal/config"
+	"github.com/kingofzihua/telegraph/internal/apiserver/config"
 )
 
-const commandDesc = `Imitate telegra.ph website`
+const commandDesc = `Imitate telegra.ph website webapi`
 
 func NewApp(basename string) *app.App {
 	opts := config.NewOptions()
-	application := app.NewApp("telegra.ph",
+	application := app.NewApp("telegraph apiserver",
 		basename,
 		app.WithOptions(opts),
 		app.WithDescription(commandDesc),

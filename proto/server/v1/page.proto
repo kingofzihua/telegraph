@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "github.com/kingofzihua/telegraph/proto/server/v1";
+
+service PageService{
+  rpc CreatePage(CreatePageRequest) returns(CreatePageResponse){}
+  rpc UpdatePage(UpdatePageRequest) returns(UpdatePageResponse){}
+  rpc GetPage(GetPageRequest) returns(GetPageResponse){}
+  rpc GetPageList(GetPageListRequest) returns(GetPageListResponse){}
+}
+
+message CreatePageRequest{
+  string title = 1;
+  string author = 2;
+  string content = 3;
+}
+message CreatePageResponse{Page page = 1;}
+
+message UpdatePageRequest{
+  string path = 1;
+  string title = 2;
+  string author = 3;
+  string content = 4;
+}
+message UpdatePageResponse{Page page = 1;}
+
+
+message GetPageRequest{string path = 1;}
+message GetPageResponse{Page page = 1;}
+
+message GetPageListRequest{
+  string author = 1;
+  int32 offset = 2;
+  int32 limit = 3;
+}
+message GetPageListResponse{
+  int32 count = 1;
+  repeated PageList pages = 2;
+}
+
+message Page{
+  // Path to the page.
+  string path = 1;
+  // Title of the page.
+  string title = 2;
+  // Description of the page.
+  string description = 3;
+  // Optional. Name of the author, displayed below the title.
+  string author = 4;
+  // Optional. Image URL of the page.
+  string image_url = 5;
+  // Number of page views for the page.
+  int32 views = 6;
+  // Optional. Content of the page.
+  string content = 7;
+}
+
+message PageList{
+  // Path to the page.
+  string path = 1;
+  // Title of the page.
+  string title = 2;
+  // Description of the page.
+  string description = 3;
+  // Optional. Name of the author, displayed below the title.
+  string author = 4;
+  // Optional. Image URL of the page.
+  string image_url = 5;
+  // Number of page views for the page.
+  int32 views = 6;
+}
