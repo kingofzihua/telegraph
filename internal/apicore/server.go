@@ -3,6 +3,10 @@ package apicore
 import (
 	"net"
 
+	"github.com/go-ostrich/pkg/log"
+
+	"github.com/kingofzihua/telegraph/internal/apicore/service"
+
 	"github.com/go-ostrich/pkg/shutdown"
 	"github.com/go-ostrich/pkg/shutdown/shutdownmanagers/posixsignal"
 	"google.golang.org/grpc"
@@ -12,14 +16,20 @@ import (
 )
 
 type grpcServer struct {
-	gs     *shutdown.GracefulShutdown
-	server *grpc.Server
-	lis    net.Listener
+	gs          *shutdown.GracefulShutdown
+	server      *grpc.Server
+	lis         net.Listener
+	mysqlConfig *config.MySQLConfig
 }
 
+// PrepareRun Pre Run
 func (s *grpcServer) PrepareRun() *preparedGrpcServer {
+	logger := log.Default()
+
+	psrv := service.NewPageService(logger)
+
 	// register server
-	v1.RegisterPageServiceServer(s.server, &v1.UnimplementedPageServiceServer{})
+	v1.RegisterPageServiceServer(s.server, psrv)
 
 	return &preparedGrpcServer{s}
 }
@@ -29,8 +39,9 @@ type preparedGrpcServer struct {
 	*grpcServer
 }
 
+// Run grpc server.
 func (s preparedGrpcServer) Run() error {
-	// start grpc serve
+	// start grpc server
 	return s.server.Serve(s.lis)
 }
 

@@ -19,7 +19,7 @@ format: ## 格式化 go 文件
 
 .PHONY: format.tidy
 format.tidy: ## go mod tidy
-	GO111MODULE=on go mod tidy
+	@GO111MODULE=on go mod tidy
 
 .PHONY: format.lint
 format.lint: ## go lint and reviewdog

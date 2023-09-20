@@ -14,3 +14,8 @@ gen.protoc: ## 编译 protobuf 文件.
 .PHONY: gen.deps
 gen.deps: tools.verify ## 安装依赖，例如：生成需要的代码等.
 	@go generate $(ROOT_DIR)/...
+
+
+.PHONY: gen.models
+gen.models: ## gorm generate models
+	go run ./tools/gormgen/main.go -c .gormgen.yaml -outPath "./internal/apicore/data/query"

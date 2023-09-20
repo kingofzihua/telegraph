@@ -12,25 +12,30 @@ import (
 
 // Config is the running configuration structure of the IAM pump service.
 type Config struct {
-	Grpc *GrpcConfig
+	Grpc  *GrpcConfig
+	MySQL *MySQLConfig
 }
 
 // NewOptions app opts
 func NewOptions() *Config {
 	return &Config{
-		Grpc: NewGrpcConfig(),
+		Grpc:  NewGrpcConfig(),
+		MySQL: NewMysqlConfig(),
 	}
 }
 
 // Validate 验证配置合法性
 func (c *Config) Validate() []error {
 	var errs []error
-
+	errs = append(errs, c.Grpc.Validate()...)
+	errs = append(errs, c.MySQL.Validate()...)
 	return errs
 }
 
 // Flags returns flags for a specific APIServer by section name.
 func (c *Config) Flags() (fss cliflag.NamedFlagSets) {
+	c.Grpc.AddFlags(fss.FlagSet("grpc"))
+	c.MySQL.AddFlags(fss.FlagSet("mysql"))
 	return fss
 }
 

@@ -3,6 +3,8 @@ package apicore
 import (
 	"github.com/go-ostrich/pkg/app"
 
+	"github.com/kingofzihua/telegraph/internal/apicore/data"
+
 	"github.com/kingofzihua/telegraph/internal/apicore/config"
 )
 
@@ -21,12 +23,20 @@ func NewApp(basename string) *app.App {
 
 func run(cfg *config.Config) app.RunFunc {
 	return func(basename string) error {
-		// Run runs the specified APIServer. This should never exit.
+		// init db client
+		client, err := cfg.MySQL.NewClient()
+		if err != nil {
+			panic(err)
+		}
+		data.SetDefaultDBClient(client)
+
+		// Run runs the specified GrpcServer.
 		srv, err := createGrpcServer(cfg)
 		if err != nil {
 			return err
 		}
 
+		// This should never exit.
 		return srv.PrepareRun().Run()
 	}
 }

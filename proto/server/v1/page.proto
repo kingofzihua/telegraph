@@ -50,7 +50,7 @@ message Page{
   // Optional. Name of the author, displayed below the title.
   string author = 4;
   // Optional. Image URL of the page.
-  string image_url = 5;
+  string thumbnail = 5;
   // Number of page views for the page.
   int32 views = 6;
   // Optional. Content of the page.
@@ -67,7 +67,7 @@ message PageList{
   // Optional. Name of the author, displayed below the title.
   string author = 4;
   // Optional. Image URL of the page.
-  string image_url = 5;
+  string thumbnail = 5;
   // Number of page views for the page.
   int32 views = 6;
 }

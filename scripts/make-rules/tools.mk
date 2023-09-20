@@ -3,7 +3,10 @@
 # 工具相关的 Makefile
 #
 
-TOOLS ?= golangci-lint goimports gotests mockgen protoc-gen-go swagger addlicense
+TOOLS ?= golangci-lint goimports gotests mockgen protoc-gen-go swagger addlicense migrate
+
+MIGRATE_VERSION="v4.15.2"
+
 
 .PHONY: tools.verify
 tools.verify: $(addprefix tools.verify., $(TOOLS)) ## 验证工具
@@ -49,3 +52,8 @@ install.swagger:
 .PHONY: install.addlicense
 install.addlicense:
 	@$(GO) install github.com/marmotedu/addlicense@latest
+
+.PHONY: install.migrate
+install.migrate: ## install migrate
+	@$(GO) install -ldflags='-X main.Version=$(MIGRATE_VERSION) -extldflags "-static"' -tags '$(DATABASE_DRIVER)' github.com/golang-migrate/migrate/v4/cmd/migrate@$(MIGRATE_VERSION)
+	@echo "migrate@$(MIGRATE_VERSION) install success"
