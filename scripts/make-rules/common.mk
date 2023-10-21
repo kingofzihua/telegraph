@@ -5,7 +5,7 @@ ROOT_DIR := $(abspath $(shell cd $(COMMON_SELF_DIR)/../../ && pwd -P))
 PACKAGE=$(shell grep "^module" go.mod | awk '{print $$2}')
 
 # Protobuf 文件存放路径
-PROTO_DIR=$(ROOT_DIR)/proto
+PROTO_DIR=$(ROOT_DIR)/api
 
 
 # ==============================================================================

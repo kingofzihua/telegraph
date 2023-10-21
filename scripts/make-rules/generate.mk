@@ -6,8 +6,8 @@ gen.protoc: ## 编译 protobuf 文件.
 	@protoc                                            \
     		--proto_path=$(PROTO_DIR)                          \
     		--proto_path=$(ROOT_DIR)/third_party             \
-    		--go_out=paths=source_relative:$(PROTO_DIR)        \
-    		--go-grpc_out=paths=source_relative:$(PROTO_DIR)   \
+    		--go_out=paths=source_relative:$(ROOT_DIR)/internal/common/protogen        \
+    		--go-grpc_out=paths=source_relative:$(ROOT_DIR)/internal/common/protogen   \
     		$(shell find $(PROTO_DIR) -name *.proto)
 	@echo "===========> Generate protobuf files success"
 

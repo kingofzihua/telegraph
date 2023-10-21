@@ -3,9 +3,9 @@ package data
 import (
 	"context"
 
-	"github.com/go-ostrich/pkg/log"
+	"github.com/kingofzihua/telegraph/internal/common/transaction"
 
-	"github.com/kingofzihua/telegraph/internal/apicore/biz"
+	"github.com/go-ostrich/pkg/log"
 
 	"gorm.io/gorm"
 )
@@ -43,6 +43,6 @@ func (d *Data) DB(ctx context.Context) *gorm.DB {
 }
 
 // NewTransaction return mysql local Transaction manager
-func NewTransaction(data *Data) biz.Transaction {
+func NewTransaction(data *Data) transaction.Transaction {
 	return data
 }

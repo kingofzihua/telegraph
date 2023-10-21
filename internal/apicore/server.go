@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-ostrich/pkg/log"
 
-	"github.com/kingofzihua/telegraph/internal/apicore/service"
+	"github.com/kingofzihua/telegraph/internal/apicore/ports"
 
 	"github.com/go-ostrich/pkg/shutdown"
 	"github.com/go-ostrich/pkg/shutdown/shutdownmanagers/posixsignal"
@@ -26,7 +26,7 @@ type grpcServer struct {
 func (s *grpcServer) PrepareRun() *preparedGrpcServer {
 	logger := log.Default()
 
-	psrv := service.NewPageService(logger)
+	psrv := ports.NewPageService(logger)
 
 	// register server
 	v1.RegisterPageServiceServer(s.server, psrv)
